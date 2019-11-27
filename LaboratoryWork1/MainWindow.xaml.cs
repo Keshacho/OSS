@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Blue] Задание №4" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -138,6 +138,27 @@ namespace LaboratoryWork1
                     count++;
                 }
                 if ((i != 0 && i != myAL.Count - 1) && ((int)myAL[i] > (int)myAL[i - 1] && (int)myAL[i] > (int)myAL[i + 1]))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        private int BlueTask4(ArrayList myAL) //4. Сколько элементов массива составляют со своими соседями упорядоченную последовательность. Первый и последний элементы массива считаются соседними.
+        {
+            int count = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                if (i == 0 && (((int)myAL[i] > (int)myAL[myAL.Count - 1] && (int)myAL[i] < (int)myAL[i + 1]) || ((int)myAL[i] < (int)myAL[myAL.Count - 1] && (int)myAL[i] > (int)myAL[i + 1])))
+                {
+                    count++;
+                }
+                if (i == myAL.Count - 1 && (((int)myAL[i] > (int)myAL[i - 1] && (int)myAL[i] < (int)myAL[0]) || ((int)myAL[i] < (int)myAL[i - 1] && (int)myAL[i] > (int)myAL[0])))
+                {
+                    count++;
+                }
+                if ((i != 0 && i != myAL.Count - 1) && ( ((int)myAL[i] > (int)myAL[i - 1] && (int)myAL[i] < (int)myAL[i + 1]) || ((int)myAL[i] < (int)myAL[i - 1] && (int)myAL[i] > (int)myAL[i + 1]) ))
                 {
                     count++;
                 }
@@ -270,6 +291,17 @@ namespace LaboratoryWork1
                     CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                     lbMain.Items.Add("Кол-во элементов массива больше своих «соседей»: " + BlueTask2(myAL));
+                }
+
+                if (comboBox_tasks.Text == "[Blue] Задание №4")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Кол-во элементов массива составляющих со своими\nсоседями упорядоченную последовательность: " + BlueTask4(myAL));
                 }
             }
             catch
