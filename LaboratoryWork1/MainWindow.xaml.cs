@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -143,6 +143,29 @@ namespace LaboratoryWork1
                 }
             }
             return count;
+        }
+
+        private int GreenTask3(ArrayList myAL) //3. Для массива из K чисел найти номер самого малого по значению элемента, значение которого больше среднего значения элементов массива.
+        {
+            int min, sum, average;
+            sum = average = min = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                sum += (int)myAL[i];
+            }
+            average = sum / myAL.Count;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                if ((int)myAL[i] > average && min == 0)
+                {
+                    min = (int)myAL[i];
+                }
+                else if (min > (int)myAL[i] && (int)myAL[i] > average)
+                {
+                    min = (int)myAL[i];
+                }
+            }
+            return myAL.IndexOf(min) + 1;
         }
 
         private void button_task_Click(object sender, RoutedEventArgs e)
@@ -271,6 +294,18 @@ namespace LaboratoryWork1
                     OutArrList(myAL, lbMain);
                     lbMain.Items.Add("Кол-во элементов массива больше своих «соседей»: " + BlueTask2(myAL));
                 }
+
+                if (comboBox_tasks.Text == "[Green] Задание №3")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Номер самого малого по значению элемента, значение\nкоторого больше среднего значения элементов: " + GreenTask3(myAL));
+                }
+
             }
             catch
             {
