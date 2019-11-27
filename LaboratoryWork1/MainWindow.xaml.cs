@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -122,6 +122,27 @@ namespace LaboratoryWork1
                 }
                 else myLB.Items.Add(myAL[i]);
             }
+        }
+
+        private int BlueTask2(ArrayList myAL) //2. Дан массив из K чисел. Сколько элементов массива меньше своих «соседей», т.е. предыдущего и последующего. Первый и последний элементы массива считаются соседними, т.е. массив представляет из себя кольцевой список.
+        {
+            int count = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                if (i == 0 && ((int)myAL[i] > (int)myAL[myAL.Count - 1] && (int)myAL[i] > (int)myAL[i + 1]))
+                {
+                    count++;
+                }
+                if (i == myAL.Count - 1 && ((int)myAL[i] > (int)myAL[i - 1] && (int)myAL[i] > (int)myAL[0]))
+                {
+                    count++;
+                }
+                if ((i != 0 && i != myAL.Count - 1) && ((int)myAL[i] > (int)myAL[i - 1] && (int)myAL[i] > (int)myAL[i + 1]))
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         private void button_task_Click(object sender, RoutedEventArgs e)
@@ -238,6 +259,17 @@ namespace LaboratoryWork1
                     GenArrList(myAL, itemCount);
                     CurrentArray = myAL;
                     Task6(myAL, lbMain);
+                }
+
+                if (comboBox_tasks.Text == "[Blue] Задание №2")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Кол-во элементов массива больше своих «соседей»: " + BlueTask2(myAL));
                 }
             }
             catch
