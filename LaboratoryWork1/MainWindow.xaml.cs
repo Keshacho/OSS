@@ -12,6 +12,8 @@ namespace LaboratoryWork1
     /// </summary>
     public partial class MainWindow : Window
     {
+        ArrayList CurrentArray = new ArrayList();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -134,6 +136,7 @@ namespace LaboratoryWork1
                     lbMain.Items.Add("Сгенерированный массив:");
                     ArrayList myAL = new ArrayList();
                     GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                 }
 
@@ -145,6 +148,7 @@ namespace LaboratoryWork1
                     GenArrList(myAL, itemCount);
                     OutArrList(myAL, lbMain);
                     myAL.Sort();
+                    CurrentArray = myAL;
                     lbMain.Items.Add("Отсортированный массив:");
                     OutArrList(myAL, lbMain);
                 }
@@ -155,6 +159,7 @@ namespace LaboratoryWork1
                     lbMain.Items.Add("Сгенерированный массив:");
                     ArrayList myAL = new ArrayList();
                     GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                     lbMain.Items.Add("Кол-во элементов массива больше своих «соседей»: " + Task1(myAL));
                 }
@@ -165,6 +170,7 @@ namespace LaboratoryWork1
                     lbMain.Items.Add("Сгенерированный массив:");
                     ArrayList myAL = new ArrayList();
                     GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                     int item_num = Task2(myAL);
                     if (item_num == -1)
@@ -180,6 +186,7 @@ namespace LaboratoryWork1
                     lbMain.Items.Add("Сгенерированный массив:");
                     ArrayList myAL = new ArrayList();
                     GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                     lbMain.Items.Add("Cумма элементов больших, чем второй элемент\nэтого массива: " + Task3(myAL));
                 }
@@ -195,6 +202,7 @@ namespace LaboratoryWork1
                         lbMain.Items.Add("Сгенерированный массив:");
                         ArrayList myAL = new ArrayList();
                         GenArrList(myAL, itemCount);
+                        CurrentArray = myAL;
                         OutArrList(myAL, lbMain);
                         int item_num = Task4(myAL,k);
                         if (item_num == -1)
@@ -216,6 +224,7 @@ namespace LaboratoryWork1
                         lbMain.Items.Add("Сгенерированный массив:");
                         ArrayList myAL = new ArrayList();
                         GenArrList(myAL, itemCount);
+                        CurrentArray = myAL;
                         OutArrList(myAL, lbMain);
                         lbMain.Items.Add($"Cумма элементов больших, чем " + k + " элемент\nэтого массива: " + Task5(myAL,k));
                     }
@@ -227,6 +236,7 @@ namespace LaboratoryWork1
                     lbMain.Items.Add("Сгенерированный массив:");
                     ArrayList myAL = new ArrayList();
                     GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
                     Task6(myAL, lbMain);
                 }
             }
@@ -267,6 +277,16 @@ namespace LaboratoryWork1
         private void button_about_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Авторы:\nТитова Д.С. - МФиИ, Группа 121171(3Б)\nЛасточкин К.И. - МФиИ, Группа 121171(3Б)", "Об авторе");
+        }
+
+        private void button_hist_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentArray.Count > 0)
+            {
+                histogram Hist = new histogram();
+                Hist.CreatingHistogram(CurrentArray);
+                Hist.Show();
+            }
         }
     }
 }

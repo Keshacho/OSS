@@ -27,5 +27,6 @@
         <ListBox x:Name="lbMain" HorizontalAlignment="Left" Height="287" Margin="161,51,0,0" VerticalAlignment="Top" Width="324"/>
         <Label x:Name="label_Copy1" Content="Выберите задание: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,79,0,0" Width="114" Height="26"/>
         <ComboBox x:Name="comboBox_tasks" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="button_hist" Content="Гистограмма" HorizontalAlignment="Left" Margin="10,268,0,0" VerticalAlignment="Top" Width="120" Click="button_hist_Click"/>
     </Grid>
 </Window>
