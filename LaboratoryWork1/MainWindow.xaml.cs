@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -168,6 +168,21 @@ namespace LaboratoryWork1
             return myAL.IndexOf(min) + 1;
         }
 
+        private void GreenTask6(ArrayList myAL) //6. Дан массив из K чисел. Выведите к исходному массиву вместо значений элементов их отклонение от среднего значения элементов массива.
+        {
+            int sum, average;
+            sum = average = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                sum += (int)myAL[i];
+            }
+            average = sum / myAL.Count;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                myAL[i] = (int)myAL[i] - average;
+            }
+        }
+
         private void button_task_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -306,6 +321,18 @@ namespace LaboratoryWork1
                     lbMain.Items.Add("Номер самого малого по значению элемента, значение\nкоторого больше среднего значения элементов: " + GreenTask3(myAL));
                 }
 
+                if (comboBox_tasks.Text == "[Green] Задание №6")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Измененный массив:");
+                    GreenTask6(myAL);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                }
             }
             catch
             {
