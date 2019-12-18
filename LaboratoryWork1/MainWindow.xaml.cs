@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6", "[Green] Задание №7", "[Red] Задание №8", "[Red] Задание №9" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6", "[Green] Задание №7", "[Red] Задание №8", "[Red] Задание №9", "[Red] Задание №10" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -258,6 +258,37 @@ namespace LaboratoryWork1
             }
         }
 
+        private void RedTask10(ArrayList myAL, int k, double k2, int n) //10. Реализуйте многоитерационный алгоритм усреднения (задание 9).
+        {
+            double sum = 0;
+            double l = Convert.ToDouble(k) / 100;
+            double z = k2;
+            double average, average_deviation;
+            average = average_deviation = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum = average = average_deviation = 0;
+                for (int j = 0; j < myAL.Count; j++)
+                {
+                    sum += Convert.ToDouble(myAL[j]);
+                }
+                average = sum / myAL.Count;
+                for (int j = 0; j < myAL.Count; j++)
+                {
+                    average_deviation += Math.Pow((Convert.ToDouble(myAL[j]) - average), 2);
+                }
+                average_deviation = Math.Sqrt(average_deviation / myAL.Count);
+                for (int j = 0; j < myAL.Count; j++)
+                {
+                    if (Math.Abs(Convert.ToDouble(myAL[j]) - average) > (average_deviation * l))
+                    {
+                        myAL[j] = Math.Round(Convert.ToDouble(myAL[j]) * z, 2);
+                        //myAL[j] = Convert.ToDouble(myAL[j]) * z;
+                    }
+                }
+            }
+        }
+
         private void button_task_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -464,10 +495,39 @@ namespace LaboratoryWork1
                         }
                     }
                 }
+
+                if (comboBox_tasks.Text == "[Red] Задание №10")
+                {
+                    Window1 GetK = new Window1("Введите L:");
+
+                    if (GetK.ShowDialog() == true && (GetK.K >= 0 && GetK.K <= 100))
+                    {
+                        Window1 GetK2 = new Window1("Введите Z:");
+                        if (GetK2.ShowDialog() == true && (GetK2.K_double >= -10 && GetK2.K_double <= 10))
+                        {
+                            Window1 GetK3 = new Window1("Введите кол-во итераций:");
+                            if (GetK3.ShowDialog() == true && (GetK3.K >= 0 && GetK3.K <= 100))
+                            {
+                                int k = GetK.K;
+                                double k2 = GetK2.K_double;
+                                int n = GetK3.K;
+                                lbMain.Items.Clear();
+                                lbMain.Items.Add("Сгенерированный массив:");
+                                ArrayList myAL = new ArrayList();
+                                GenArrList(myAL, itemCount);
+                                OutArrList(myAL, lbMain);
+                                lbMain.Items.Add("Измененный массив:");
+                                RedTask10(myAL, k, k2, n);
+                                CurrentArray = myAL;
+                                OutArrList(myAL, lbMain);
+                            }
+                        }
+                    }
+                }
             }
             catch
             {
-                MessageBox.Show("Произошла ошибка. Проверьте корректность введенных данных.", "Ошибка");
+               MessageBox.Show("Произошла ошибка. Проверьте корректность введенных данных.", "Ошибка");
             }
         }
 
