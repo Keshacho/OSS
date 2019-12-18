@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Blue] Задание №4", "[Blue] Задание №5" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", , "[Blue] Задание №4", , "[Blue] Задание №5", "[Green] Задание №6", "[Green] Задание №7", "[Green] Задание №16" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -143,6 +143,87 @@ namespace LaboratoryWork1
                 }
             }
             return count;
+        }
+
+        private int GreenTask3(ArrayList myAL) //3. Для массива из K чисел найти номер самого малого по значению элемента, значение которого больше среднего значения элементов массива.
+        {
+            int min, sum, average;
+            sum = average = min = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                sum += (int)myAL[i];
+            }
+            average = sum / myAL.Count;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                if ((int)myAL[i] > average && min == 0)
+                {
+                    min = (int)myAL[i];
+                }
+                else if (min > (int)myAL[i] && (int)myAL[i] > average)
+                {
+                    min = (int)myAL[i];
+                }
+            }
+            return myAL.IndexOf(min) + 1;
+        }
+
+        private void GreenTask6(ArrayList myAL) //6. Дан массив из K чисел. Выведите к исходному массиву вместо значений элементов их отклонение от среднего значения элементов массива.
+        {
+            int sum, average;
+            sum = average = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                sum += (int)myAL[i];
+            }
+            average = sum / myAL.Count;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                myAL[i] = (int)myAL[i] - average;
+            }
+        }
+
+        private void GreenTask7(ArrayList myAL) //7. Дан массив из K чисел. Найдите среднее значение элементов массива. Замените все элементы массива, отклонение от среднего значения которых больше половины среднего отклонения всех элементов, на среднее значение.
+        {
+            int sum = 0;
+            double average, average_deviation;
+            average = average_deviation = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                sum += (int)myAL[i];
+            }
+            average = sum / myAL.Count;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                average_deviation += Math.Pow(((int)myAL[i] - average),2);
+            }
+            average_deviation = Math.Sqrt(average_deviation / myAL.Count);
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                if (Math.Abs((int)myAL[i] - average) > (average_deviation / 2))
+                {
+                    myAL[i] = Math.Round(average, 2);
+                }
+            }
+        }
+
+        private void GreenTask16(ArrayList myAL, int ItemCount) //16. Реализуйте функцию генерации всеубывающей последовательности значений элементов массива (для каждого следующего элемента случайно не само значение элемента, а его ущерб относительно текущего).
+        {
+            Random rnd = new Random();
+            double num = 0;
+            int start_number = rnd.Next(-100,100);
+            for (int index = 0; index < ItemCount; index++)
+            {
+                if (index == 0)
+                {
+                    myAL.Add(start_number);
+                }
+                else
+                {
+                    num = Convert.ToDouble(myAL[index - 1]) * rnd.NextDouble();
+                    myAL.Add(num);
+                }
+            }
         }
 
         private int BlueTask4(ArrayList myAL) //4. Сколько элементов массива составляют со своими соседями упорядоченную последовательность. Первый и последний элементы массива считаются соседними.
@@ -331,6 +412,53 @@ namespace LaboratoryWork1
                     lbMain.Items.Add("Кол-во элементов массива больше своих «соседей»: " + BlueTask2(myAL));
                 }
 
+                if (comboBox_tasks.Text == "[Green] Задание №3")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Номер самого малого по значению элемента, значение\nкоторого больше среднего значения элементов: " + GreenTask3(myAL));
+                }
+
+                if (comboBox_tasks.Text == "[Green] Задание №6")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Измененный массив:");
+                    GreenTask6(myAL);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                }
+
+                if (comboBox_tasks.Text == "[Green] Задание №7")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Измененный массив:");
+                    GreenTask7(myAL);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                }
+
+                if (comboBox_tasks.Text == "[Green] Задание №16")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GreenTask16(myAL, itemCount);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                }
+
                 if (comboBox_tasks.Text == "[Blue] Задание №4")
                 {
                     lbMain.Items.Clear();
@@ -357,7 +485,7 @@ namespace LaboratoryWork1
             }
             catch
             {
-                MessageBox.Show("Произошла ошибка. Проверьте корректность введенных данных.", "Ошибка");
+               MessageBox.Show("Произошла ошибка. Проверьте корректность введенных данных.", "Ошибка");
             }
         }
 
