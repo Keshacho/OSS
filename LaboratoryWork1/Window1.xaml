@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock>Введите K:</TextBlock>
+        <TextBlock x:Name="title">Введите K:</TextBlock>
         <TextBox Name="textbox" Grid.Row="1" MinWidth="250">5</TextBox>
 
         <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0,15,0,0">

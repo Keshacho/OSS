@@ -24,6 +24,12 @@ namespace LaboratoryWork1
             InitializeComponent();
         }
 
+        public Window1(string text_title)
+        {
+            InitializeComponent();
+            title.Text = text_title;
+        }
+
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
@@ -32,6 +38,11 @@ namespace LaboratoryWork1
         public int K
         {
             get { return Convert.ToInt32(textbox.Text); }
+        }
+
+        public double K_double
+        {
+            get { return Convert.ToDouble(textbox.Text); }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6", "[Green] Задание №7", "[Red] Задание №8" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6", "[Green] Задание №7", "[Red] Задание №8", "[Red] Задание №9" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -232,6 +232,32 @@ namespace LaboratoryWork1
             }
         }
 
+        private void RedTask9(ArrayList myAL, int k, double k2) //9. Дан массив из K чисел. Найдите среднее значение элементов массива. Измените все элементы массива, отклонение от среднего значения которых больше L процентов от среднего отклонения всех элементов, на коэфициент Z.
+        {
+            double sum = 0;
+            double l = Convert.ToDouble(k) / 100;
+            double z = k2;
+            double average, average_deviation;
+            average = average_deviation = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                sum += (int)myAL[i];
+            }
+            average = sum / myAL.Count;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                average_deviation += Math.Pow(((int)myAL[i] - average), 2);
+            }
+            average_deviation = Math.Sqrt(average_deviation / myAL.Count);
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                if (Math.Abs((int)myAL[i] - average) > (average_deviation * l))
+                {
+                    myAL[i] = (int)myAL[i]*z;
+                }
+            }
+        }
+
         private void button_task_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -412,6 +438,30 @@ namespace LaboratoryWork1
                         RedTask8(myAL,k);
                         CurrentArray = myAL;
                         OutArrList(myAL, lbMain);
+                    }
+                }
+
+                if (comboBox_tasks.Text == "[Red] Задание №9")
+                {
+                    Window1 GetK = new Window1("Введите L:");
+
+                    if (GetK.ShowDialog() == true && (GetK.K >= 0 && GetK.K <= 100))
+                    {
+                        Window1 GetK2 = new Window1("Введите Z:");
+                        if (GetK2.ShowDialog() == true && (GetK2.K_double >= -10 && GetK2.K_double <= 10))
+                        {
+                            int k = GetK.K;
+                            double k2 = GetK2.K_double;
+                            lbMain.Items.Clear();
+                            lbMain.Items.Add("Сгенерированный массив:");
+                            ArrayList myAL = new ArrayList();
+                            GenArrList(myAL, itemCount);
+                            OutArrList(myAL, lbMain);
+                            lbMain.Items.Add("Измененный массив:");
+                            RedTask9(myAL, k, k2);
+                            CurrentArray = myAL;
+                            OutArrList(myAL, lbMain);
+                        }
                     }
                 }
             }
