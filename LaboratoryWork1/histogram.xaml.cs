@@ -26,7 +26,7 @@ namespace LaboratoryWork1
 
             for (int index = 0; index < myAL.Count; index++)
             {
-                chart.Series["Series1"].Points.AddXY(index + 1, (int)myAL[index]);
+                chart.Series["Series1"].Points.AddXY(index + 1, myAL[index]);
             }
         }
     }

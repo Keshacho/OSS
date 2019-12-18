@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6", "[Green] Задание №7" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -183,6 +183,30 @@ namespace LaboratoryWork1
             }
         }
 
+        private void GreenTask7(ArrayList myAL) //7. Дан массив из K чисел. Найдите среднее значение элементов массива. Замените все элементы массива, отклонение от среднего значения которых больше половины среднего отклонения всех элементов, на среднее значение.
+        {
+            int sum = 0;
+            double average, average_deviation;
+            average = average_deviation = 0;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                sum += (int)myAL[i];
+            }
+            average = sum / myAL.Count;
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                average_deviation += Math.Pow(((int)myAL[i] - average),2);
+            }
+            average_deviation = Math.Sqrt(average_deviation / myAL.Count);
+            for (int i = 0; i < myAL.Count; i++)
+            {
+                if (Math.Abs((int)myAL[i] - average) > (average_deviation / 2))
+                {
+                    myAL[i] = Math.Round(average, 2);
+                }
+            }
+        }
+
         private void button_task_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -330,6 +354,19 @@ namespace LaboratoryWork1
                     OutArrList(myAL, lbMain);
                     lbMain.Items.Add("Измененный массив:");
                     GreenTask6(myAL);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                }
+
+                if (comboBox_tasks.Text == "[Green] Задание №7")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Измененный массив:");
+                    GreenTask7(myAL);
                     CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                 }
