@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6", "[Green] Задание №7" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Green] Задание №6", "[Green] Задание №7", "[Green] Задание №16" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -207,6 +207,25 @@ namespace LaboratoryWork1
             }
         }
 
+        private void GreenTask16(ArrayList myAL, int ItemCount) //16. Реализуйте функцию генерации всеубывающей последовательности значений элементов массива (для каждого следующего элемента случайно не само значение элемента, а его ущерб относительно текущего).
+        {
+            Random rnd = new Random();
+            double num = 0;
+            int start_number = rnd.Next(-100,100);
+            for (int index = 0; index < ItemCount; index++)
+            {
+                if (index == 0)
+                {
+                    myAL.Add(start_number);
+                }
+                else
+                {
+                    num = Convert.ToDouble(myAL[index - 1]) * rnd.NextDouble();
+                    myAL.Add(num);
+                }
+            }
+        }
+
         private void button_task_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -370,10 +389,20 @@ namespace LaboratoryWork1
                     CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                 }
+
+                if (comboBox_tasks.Text == "[Green] Задание №16")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GreenTask16(myAL, itemCount);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                }
             }
             catch
             {
-                MessageBox.Show("Произошла ошибка. Проверьте корректность введенных данных.", "Ошибка");
+               MessageBox.Show("Произошла ошибка. Проверьте корректность введенных данных.", "Ошибка");
             }
         }
 
