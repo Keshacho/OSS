@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Blue] Задание №4" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Blue] Задание №4", "[Blue] Задание №5" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -166,6 +166,44 @@ namespace LaboratoryWork1
             return count;
         }
 
+        private void BlueTask5(ArrayList myAL) //5. Дан массив из K чисел.Замените элементы массива таким образом, чтобы элементы составляли со своими соседями упорядоченную последовательность.Направления последовательности могут меняться.
+        {
+            int temp;
+            for (int i = 1; i < myAL.Count - 1; i = i + 3)
+            {
+                if ((int)myAL[i] > (int)myAL[i - 1] && (int)myAL[i] > (int)myAL[i + 1])
+                {
+                    if ((int)myAL[i - 1] < (int)myAL[i + 1])
+                    {
+                        temp = (int)myAL[i];
+                        myAL[i] = myAL[i + 1];
+                        myAL[i + 1] = temp;
+                    }
+                    else
+                    {
+                        temp = (int)myAL[i];
+                        myAL[i] = myAL[i - 1];
+                        myAL[i - 1] = temp;
+                    }
+                }
+                else if ((int)myAL[i] < (int)myAL[i - 1] && (int)myAL[i] < (int)myAL[i + 1])
+                {
+                    if ((int)myAL[i - 1] < (int)myAL[i + 1])
+                    {
+                        temp = (int)myAL[i];
+                        myAL[i] = myAL[i - 1];
+                        myAL[i - 1] = temp;
+                    }
+                    else
+                    {
+                        temp = (int)myAL[i];
+                        myAL[i] = myAL[i + 1];
+                        myAL[i + 1] = temp;
+                    }
+                }
+            }
+        }
+
         private void button_task_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -302,6 +340,19 @@ namespace LaboratoryWork1
                     CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                     lbMain.Items.Add("Кол-во элементов массива составляющих со своими\nсоседями упорядоченную последовательность: " + BlueTask4(myAL));
+                }
+
+                if (comboBox_tasks.Text == "[Blue] Задание №5")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    GenArrList(myAL, itemCount);
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Измененный массив:");
+                    BlueTask5(myAL);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
                 }
             }
             catch
