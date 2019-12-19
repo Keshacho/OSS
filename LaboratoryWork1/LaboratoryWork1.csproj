@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Gen.cs" />
     <Compile Include="histogram.xaml.cs">
       <DependentUpon>histogram.xaml</DependentUpon>
     </Compile>

@@ -17,7 +17,7 @@ namespace LaboratoryWork1
         public MainWindow()
         {
             InitializeComponent();
-            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Blue] Задание №4", "[Blue] Задание №5", "[Green] Задание №6", "[Green] Задание №7", "[Green] Задание №16" };
+            string[] TasksArray = { "Расчет №1", "Расчет №2", "Задание №1", "Задание №2", "Задание №3", "Задание №4", "Задание №5", "Задание №6", "[Blue] Задание №2", "[Green] Задание №3", "[Blue] Задание №4", "[Blue] Задание №5", "[Green] Задание №6", "[Green] Задание №7", "[Green] Задание №16", "[Blue|Автор 1] Задание №11(1)", "[Blue|Автор 1] Задание №11(2)" };
             for (int index = 0; index < TasksArray.Length; index++)
             {
                 comboBox_tasks.Items.Add(TasksArray[index]);
@@ -482,6 +482,34 @@ namespace LaboratoryWork1
                     CurrentArray = myAL;
                     OutArrList(myAL, lbMain);
                 }
+
+                if (comboBox_tasks.Text == "[Blue|Автор 1] Задание №11(1)")
+                {
+                    lbMain.Items.Clear();
+                    lbMain.Items.Add("Сгенерированный массив:");
+                    ArrayList myAL = new ArrayList();
+                    Gen ArrayGen = new Gen();
+                    ArrayGen.GenArrList(myAL, itemCount);
+                    OutArrList(myAL, lbMain);
+                    lbMain.Items.Add("Измененный массив:");
+                    BlueTask5(myAL);
+                    CurrentArray = myAL;
+                    OutArrList(myAL, lbMain);
+                }
+
+                if (comboBox_tasks.Text == "[Blue|Автор 1] Задание №11(2)")
+                {
+                    if (itemCount <= 100)
+                    {
+                        lbMain.Items.Clear();
+                        lbMain.Items.Add("Сгенерированный массив:");
+                        ArrayList myAL = new ArrayList();
+                        Gen ArrayGen = new Gen();
+                        ArrayGen.GenDecreasingArrList(myAL, itemCount);
+                        CurrentArray = myAL;
+                        OutArrList(myAL, lbMain);
+                    } else MessageBox.Show("Максимальное кол-во для данной генерации 100 элементов.", "Ошибка");
+                }
             }
             catch
             {
@@ -524,11 +552,18 @@ namespace LaboratoryWork1
 
         private void button_hist_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentArray.Count > 0)
+            try
             {
-                histogram Hist = new histogram();
-                Hist.CreatingHistogram(CurrentArray);
-                Hist.Show();
+                if (CurrentArray.Count > 0)
+                {
+                    histogram Hist = new histogram();
+                    Hist.CreatingHistogram(CurrentArray);
+                    Hist.Show();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Невозможно отобразить гистограмму для данного массива.", "Ошибка");
             }
         }
     }
